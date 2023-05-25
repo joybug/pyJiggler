@@ -11,6 +11,7 @@ Loop = True
 count = 0
 pag.FAILSAFE = False
 
+PauseMap = {True:'On',False:'Off'}
 
 def get_random_coords():
     screen = pag.size()
@@ -25,24 +26,21 @@ def get_random_coords():
 def press_pause():
     global PAUSE
     PAUSE = not PAUSE
+    print(f"Pause {PauseMap.get(PAUSE)} !")
 
 def press_exit():
     global Loop
-    Loop = False
+    print('Exit jiggler !')
+    Loop = False    
 
 keyboard.add_hotkey('ctrl+alt+p', press_pause) #ctrl+alt+p 로 포즈 토글
 keyboard.add_hotkey('ctrl+alt+z', press_exit)  #ctrl+alt+z 로 종료
 
 while Loop:
 
-    if keyboard.is_pressed('esc') :
-        print('End mouse move!!')
-        Loop = False
-
     if PAUSE == True:
         #print("Pause 실행중..")
         continue
-
 
     time.sleep(0.1)
     count +=1
@@ -80,6 +78,7 @@ while Loop:
         pag.press('esc')
     
         count = 0
-    
+
+# 종료시 핫키 제거    
 keyboard.remove_hotkey('ctrl+alt+p')
 keyboard.remove_hotkey('ctrl+alt+z')
